@@ -1,0 +1,7 @@
+all:
+  children:
+    webservers:
+      hosts:
+        # Exemple avec un déploiement en local
+        this_server:
+          ansible_connection: local

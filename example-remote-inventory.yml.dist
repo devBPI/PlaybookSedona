@@ -1,0 +1,10 @@
+all:
+  children:
+    webservers:
+      hosts:
+        front_1:
+          ansible_user: catalogue # A REMPLACER
+          ansible_host: # hostname ou adresse IP
+        front_2:
+          ansible_user: catalogue # A REMPLACER
+          ansible_host: # hostname ou adresse IP

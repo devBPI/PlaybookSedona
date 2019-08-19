@@ -1,0 +1,21 @@
+---
+###
+# Ansistrano general configuration override
+# Copy a value to override from <playbook dir>/roles/ansistrano.deploy/defaults/main.yml
+
+# Number of releases to keep in your hosts, if 0, unlimited releases will be kept
+ansistrano_keep_releases: 3
+
+# Deployment strategy
+ansistrano_deploy_via: "maven_unarchive"
+
+## Sends anonymous stats to the www.ansistrano.com servers
+## You can disallow it by just setting this parameter to "no" in your playbook
+ansistrano_allow_anonymous_stats: no
+
+###
+# Maven specific configuration
+#
+ansistrano_maven_repository_url: "https://repo.cicd.sedona.fr/artifactory/php-{{ ansistrano_maven_artifact_type|lower }}"
+ansistrano_maven_artifact_extension: "tgz"
+

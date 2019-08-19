@@ -1,0 +1,7 @@
+---
+ansistrano_deploy_to: "/home/centos/test_deploy"
+
+ansistrano_maven_group_id: "fr.bpi.catalogue"
+ansistrano_maven_artifact_id: "catalogue-site"
+
+ansistrano_url_username: "ext-bpi"

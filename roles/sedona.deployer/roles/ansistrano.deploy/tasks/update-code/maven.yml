@@ -1,0 +1,44 @@
+---
+
+- name: ANSISTRANO | maven | Validate version
+  fail:
+    msg: "You must provide a valid version number to deploy a Release."
+  when: ansistrano_maven_artifact_type == "release" and ansistrano_maven_artifact_version == "latest"
+
+- name: ANSISTRANO | maven | Set destination file (latest snapshot)
+  set_fact:
+    ansistrano_destination_file: "{{ ansistrano_release_version }}.{{ ansistrano_maven_artifact_extension }}"
+
+- name: ANSISTRANO | maven | Ensure destination folder exists
+  file:
+    name: "{{ ansistrano_release_path.stdout }}"
+    state: directory
+    mode: 0755
+
+- name: ANSISTRANO | maven | Format snapshot version
+  set_fact:
+    ansistrano_maven_artifact_formatted_version: "{{ ansistrano_maven_artifact_version }}"
+  when: ansistrano_maven_artifact_type == "release" or ansistrano_maven_artifact_version == "latest"
+
+- name: ANSISTRANO | maven | Format snapshot version
+  set_fact:
+    ansistrano_maven_artifact_formatted_version: "{{ ansistrano_maven_artifact_version }}-SNAPSHOT"
+  when: ansistrano_maven_artifact_type == "snapshot" and ansistrano_maven_artifact_version != "latest"
+
+- name: ANSISTRANO | maven | Final version format
+  debug:
+    msg:
+      - "Artifact type : {{ ansistrano_maven_artifact_type }}"
+      - "Version : {{ ansistrano_maven_artifact_formatted_version }}"
+
+- name: ANSISTRANO | maven | Download Maven Artifact
+  maven_artifact:
+    group_id: "{{ ansistrano_maven_group_id }}"
+    artifact_id: "{{ ansistrano_maven_artifact_id }}"
+    extension: "{{ ansistrano_maven_artifact_extension }}"
+    repository_url: "{{ ansistrano_maven_repository_url }}"
+    username: "{{ ansistrano_url_username }}"
+    password: "{{ ansistrano_url_password }}"
+    dest: "{{ ansistrano_release_path.stdout }}/{{ ansistrano_destination_file }}"
+    version: "{{ ansistrano_maven_artifact_formatted_version }}"
+    validate_certs: "no"

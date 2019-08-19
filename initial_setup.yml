@@ -1,0 +1,44 @@
+---
+- name: "INSTALL — Configuration du script de déploiement."
+
+  hosts: 127.0.0.1
+  connection: local
+
+  vars_prompt:
+    - name: "project_deploy_dir"
+      prompt: |
+        Répertoire dans lequel les versions de l'application seront déployées.
+        Le répertoire doit exister et être accessible en lecture & écriture par l'utilisateur courant.
+
+        NOTE: Si la machine de déploiement et le serveur web sont deux machines différentes, le répertoire cible
+        ainsi que l'utilisateur devant y accéder doivent exister sur le serveur web.
+        (par défaut: /var/www/html/bpi-catalogue)
+      private: no
+      default: "/var/www/html/bpi-catalogue"
+
+    - name: "project_group_id"
+      prompt: |
+        Identifiant du groupe contenant les livrables à installer.
+        Exemple : fr.sedona.project-code
+      private: no
+
+    - name: "project_artifact_id"
+      prompt: |
+        Identifiant des livrables de l'application à déployer.
+        Exemple : project-mainmodule
+      private: no
+
+    - name: "ansistrano_url_username"
+      prompt: Nom d'utilisateur pour l'accès au dépôt d'artefacts
+      private: no
+
+  tasks:
+    - name: "INSTALL — Vérification des valeurs"
+      fail:
+        msg: "Les identifiants de groupes et livrables ne peuvent être vides."
+      when: project_group_id|length == 0 or project_artifact_id|length == 0
+
+    - name: "INSTALL — Écriture de la configuration de déploiement"
+      template:
+        src: "{{ playbook_dir }}/templates/project_vars.yml.j2"
+        dest: "{{ playbook_dir }}/config/main.yml"

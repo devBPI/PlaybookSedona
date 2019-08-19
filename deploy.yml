@@ -1,0 +1,28 @@
+---
+- name: "Déploiement Interface Catalogue"
+  hosts: all
+
+  pre_tasks:
+
+    - name: "BPI — Localisation du fichier de configuration"
+      delegate_to: localhost
+      stat:
+        path: "{{ playbook_dir }}/config/main.yml"
+      register: config_file
+
+    - name: "BPI — Vérificaton d'accès au fichier"
+      delegate_to: localhost
+      fail:
+        msg: |
+          Fichier de configuration absent.
+          Lancez 'ansible-playbook initial_setup.yml'
+      when: not config_file.stat.exists or not config_file.stat.readable
+
+    - name: "BPI — Chargement des valeurs"
+      delegate_to: localhost
+      include_vars:
+        file: "{{ playbook_dir }}/config/main.yml"
+      when: config_file.stat.exists
+
+- name: "Lancement de la procédure de déploiement"
+  import_playbook: "{{ playbook_dir }}/roles/sedona.deployer/webservers.yml"
