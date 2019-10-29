@@ -5,7 +5,7 @@
   connection: local
 
   vars_prompt:
-    - name: "project_deploy_dir"
+    - name: "ansistrano_deploy_to"
       prompt: |
         Répertoire dans lequel les versions de l'application seront déployées.
         Le répertoire doit exister et être accessible en lecture & écriture par l'utilisateur courant.
@@ -16,13 +16,13 @@
       private: no
       default: "/var/www/html/bpi-catalogue"
 
-    - name: "project_group_id"
+    - name: "ansistrano_maven_group_id"
       prompt: |
         Identifiant du groupe contenant les livrables à installer.
         Exemple : fr.sedona.project-code
       private: no
 
-    - name: "project_artifact_id"
+    - name: "ansistrano_maven_artifact_id"
       prompt: |
         Identifiant des livrables de l'application à déployer.
         Exemple : project-mainmodule
@@ -32,11 +32,64 @@
       prompt: Nom d'utilisateur pour l'accès au dépôt d'artefacts
       private: no
 
+    - name: "app_config_database_host"
+      prompt: Nom d'hôte / adresse IP du serveur PostgreSQL
+      default: "localhost"
+      private: no
+
+    - name: "app_config_database_name"
+      prompt: Nom de la base PostgreSQL
+      private: no
+
+    - name: "app_config_database_user"
+      prompt: Nom d'utilisateur PostgreSQL
+      private: no
+
+    - name: "app_config_database_password"
+      prompt: Mot de passe PostgreSQL
+      private: yes
+
+    - name: "app_config_redis_host"
+      prompt: Nom d'hôte / adresse IP du serveur Redis
+      default: "localhost"
+      private: no
+
+    - name: "app_config_redis_port"
+      prompt: Port d'écoute du serveur Redis
+      default: "6379"
+      private: no
+
+    - name: "app_config_ldap_host"
+      prompt: Nom d'hôte / adresse IP du serveur LDAP
+      default: "localhost"
+      private: no
+
+    - name: "app_config_ldap_port"
+      prompt: Port d'écoute du serveur LDAP
+      default: "6379"
+      private: no
+
+    - name: "app_config_mailer_url"
+      prompt: |
+        Accès au serveur de mail.
+        Configuration au format DSN.
+        Voir : https://symfony.com/doc/current/reference/configuration/swiftmailer.html
+
+        Par défaut : désactivation des envois emails (null://localhost)
+      default: "null://localhost"
+      private: no
+
+    - name: "app_config_catalog_ws_url"
+      prompt: |
+        URL du webservice BPI
+      default: "http://10.1.2.120:8080/CatalogueWebService/api/"
+      private: no
+
   tasks:
     - name: "INSTALL — Vérification des valeurs"
       fail:
         msg: "Les identifiants de groupes et livrables ne peuvent être vides."
-      when: project_group_id|length == 0 or project_artifact_id|length == 0
+      when: ansistrano_maven_group_id|length == 0 or ansistrano_maven_artifact_id|length == 0
 
     - name: "INSTALL — Écriture de la configuration de déploiement"
       template:

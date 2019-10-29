@@ -1,0 +1,11 @@
+ansible==2.8.5
+asn1crypto==1.2.0
+cffi==1.13.0
+cryptography==2.7
+Jinja2==2.10.3
+lxml==4.4.1
+MarkupSafe==1.1.1
+pycparser==2.19
+PyYAML==5.1.2
+selinux==0.2.0
+six==1.12.0

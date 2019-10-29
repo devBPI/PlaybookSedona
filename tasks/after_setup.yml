@@ -1,0 +1,18 @@
+---
+- name: "Ensure composer is present"
+  shell: >-
+    curl https://getcomposer.org/installer |
+    php -- --install-dir={{ ansistrano_shared_path }}/ --filename=composer
+  args:
+    creates: "{{ ansistrano_shared_path }}/composer"
+    warn: no
+
+- name: "Ensure composer is executable"
+  file:
+    path: "{{ ansistrano_shared_path }}/composer"
+    state: "file"
+    mode: "a+x"
+
+- name: "Declare composer command"
+  set_fact:
+    composer_command: "{{ ansistrano_shared_path }}/composer"

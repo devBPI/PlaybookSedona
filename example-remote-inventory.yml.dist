@@ -5,6 +5,8 @@ all:
         front_1:
           ansible_user: catalogue # A REMPLACER
           ansible_host: # hostname ou adresse IP
+          app_env: prod # 'dev' ou 'prod'
         front_2:
           ansible_user: catalogue # A REMPLACER
           ansible_host: # hostname ou adresse IP
+          app_env: prod # 'dev' ou 'prod'

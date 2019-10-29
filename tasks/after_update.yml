@@ -1,0 +1,76 @@
+---
+- name: "Create .env file"
+  copy:
+    src: "{{ ansistrano_release_path.stdout }}/.env.dist"
+    remote_src: yes
+    dest: "{{ ansistrano_release_path.stdout }}/.env"
+
+- name: "Fill config values"
+  replace:
+    path: "{{ ansistrano_release_path.stdout }}/.env"
+    regexp: "{{ item.search }}"
+    replace: "{{ item.replace }}"
+  loop:
+    - {
+      search: "^(APP_ENV=).+$",
+        replace: "\\1prod"
+    }
+    - {
+      search: "^(APP_SECRET=).+$",
+        replace: "APP_SECRET={{ ansible_machine_id }}"
+    }
+    - {
+      search: "^(DATABASE_URL=).+$",
+        replace: "\\1postgresql://{{ app_config_database_user }}:{{ app_config_database_password }}@{{ app_config_database_host }}:5432/{{ app_config_database_name }}"
+    }
+
+    - {
+      search: "^(REDIS_URL=).+$",
+      replace: "\\1redis://{{ app_config_redis_host }}:{{ app_config_redis_port }}"
+    }
+
+    - {
+      search: "^(LDAP_HOST=).+$",
+      replace: "\\1{{ app_config_ldap_host }}"
+    }
+
+    - {
+      search: "^(LDAP_PORT=).+$",
+      replace: "LDAP_PORT={{ app_config_ldap_port }}"
+    }
+
+    - {
+      search: "^(LDAP_PASSWORD=).+$",
+      replace: "LDAP_PASSWORD={{ app_config_ldap_password }}"
+    }
+
+    - {
+      search: "^(MAILER_URL=).+$",
+      replace: "\\1{{ app_config_mailer_url }}"
+    }
+
+    - {
+      search: "^(CATALOG_API_HOST=).+$",
+      replace: "\\1{{ app_config_catalog_ws_url }}"
+    }
+
+- name: "Generate static configuration"
+  command: "{{ composer_command }} dump-env prod"
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}"
+
+- name: "Run database migrations"
+  command: "bin/console doctrine:migration:migrate --allow-no-migration --no-interaction"
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}"
+
+- name: "Clear Caches"
+  command: "bin/console cache:clear --no-interaction"
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}"
+
+- name: "Flush opcache"
+  become: yes
+  systemd:
+    name: "php-fpm"
+    state: restarted

@@ -1,9 +1,33 @@
 ---
 - name: "Déploiement Interface Catalogue"
-  hosts: all
+  hosts: webservers
+
+  vars_files:
+    - "{{ playbook_dir }}/defaults/main.yml"
+
+  vars_prompt:
+    - name: "ansistrano_maven_artifact_type"
+      prompt: |
+        Artifact type to deploy :
+          - release (default)
+          - snapshot
+        (ansistrano_maven_artifact_type)
+      private: no
+      default: "release"
+
+    - name: "ansistrano_maven_artifact_version"
+      prompt: |
+        Version to deploy (ex: 0.1.2)
+        (ansistrano_maven_artifact_version)
+      private: no
+
+    - name: "ansistrano_url_password"
+      prompt: |
+        Password for artifact repository
+        (ansistrano_url_password)
+      private: yes
 
   pre_tasks:
-
     - name: "BPI — Localisation du fichier de configuration"
       delegate_to: localhost
       stat:
@@ -14,9 +38,26 @@
       delegate_to: localhost
       fail:
         msg: |
-          Fichier de configuration absent.
+          Fichier de configuration absent ou valeur manquante.
           Lancez 'ansible-playbook initial_setup.yml'
-      when: not config_file.stat.exists or not config_file.stat.readable
+      when: >
+        not config_file.stat.exists
+        and (
+        not ansistrano_deploy_to is defined
+        or not ansistrano_maven_group_id is defined
+        or not ansistrano_maven_artifact_id is defined
+        or not ansistrano_url_username is defined
+        or not app_config_database_host is defined
+        or not app_config_database_name is defined
+        or not app_config_database_user is defined
+        or not app_config_database_password is defined
+        or not app_config_redis_host is defined
+        or not app_config_redis_port is defined
+        or not app_config_ldap_host is defined
+        or not app_config_ldap_port is defined
+        or not app_config_mailer_url is defined
+        or not app_config_catalog_ws_url is defined
+        )
 
     - name: "BPI — Chargement des valeurs"
       delegate_to: localhost
@@ -24,5 +65,28 @@
         file: "{{ playbook_dir }}/config/main.yml"
       when: config_file.stat.exists
 
-- name: "Lancement de la procédure de déploiement"
-  import_playbook: "{{ playbook_dir }}/roles/sedona.deployer/webservers.yml"
+    - name: "DEPLOY — Validate artifact type."
+      fail:
+        msg: |
+          Bad artifact type provided: '{{ ansistrano_maven_artifact_type }}'.
+          Valid values: 'release' or 'snapshot'.
+          (ansistrano_maven_artifact_type)
+      when: ansistrano_maven_artifact_type != "release" and ansistrano_maven_artifact_type != "snapshot"
+      delegate_to: localhost
+
+    - name: "DEPLOY — Set repository URL."
+      debug:
+        msg: "Repo: {{ ansistrano_maven_repository_url }}"
+      delegate_to: localhost
+
+    - name: "DEPLOY — Set deployment version."
+      set_fact:
+        ansistrano_release_version: "{{ [lookup('pipe', 'date -u +%Y%m%d-%H%M%S'),
+                                                         ansistrano_maven_artifact_type|upper,
+                                                       ansistrano_maven_artifact_version]|join('-') }}"
+      run_once: true
+      when: ansistrano_release_version is not defined
+      delegate_to: localhost
+
+  roles:
+    - ansistrano.deploy

@@ -19,3 +19,5 @@ ansistrano_allow_anonymous_stats: no
 ansistrano_maven_repository_url: "https://repo.cicd.sedona.fr/artifactory/php-{{ ansistrano_maven_artifact_type|lower }}"
 ansistrano_maven_artifact_extension: "tgz"
 
+ansistrano_after_setup_tasks_file: "{{ playbook_dir }}/tasks/after_setup.yml"
+ansistrano_after_update_code_tasks_file: "{{ playbook_dir }}/tasks/after_update.yml"

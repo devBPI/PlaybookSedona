@@ -1,7 +1,19 @@
 ---
-ansistrano_deploy_to: "{{ project_deploy_dir|trim }}"
+ansistrano_deploy_to: "{{ ansistrano_deploy_to|trim }}"
 
-ansistrano_maven_group_id: "{{ project_group_id|trim }}"
-ansistrano_maven_artifact_id: "{{ project_artifact_id|trim }}"
+ansistrano_maven_group_id: "{{ ansistrano_maven_group_id|trim }}"
+ansistrano_maven_artifact_id: "{{ ansistrano_maven_artifact_id|trim }}"
 
 ansistrano_url_username: "{{ ansistrano_url_username }}"
+
+app_config_database_host: "{{ app_config_database_host }}"
+app_config_database_name: "{{ app_config_database_name }}"
+app_config_database_user: "{{ app_config_database_user }}"
+app_config_database_password: "{{ app_config_database_password }}"
+app_config_redis_host: "{{ app_config_redis_host }}"
+app_config_redis_port: "{{ app_config_redis_port }}"
+app_config_ldap_host: "{{ app_config_ldap_host }}"
+app_config_ldap_port: "{{ app_config_ldap_port }}"
+app_config_ldap_password: "{{ app_config_ldap_password }}"
+app_config_mailer_url: "{{ app_config_mailer_url }}"
+app_config_catalog_ws_url: "{{ app_config_catalog_ws_url }}"
