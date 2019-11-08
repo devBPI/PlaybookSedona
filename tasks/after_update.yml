@@ -48,6 +48,11 @@
       search: "^(MAILER_URL=).+$",
       replace: "\\1{{ app_config_mailer_url }}"
     }
+    
+    - {
+      search: "^(MAIL_SENDER=).+$",
+      replace: "\\1{{ app_config_mail_sender_url }}"
+    }
 
     - {
       search: "^(CATALOG_API_HOST=).+$",
