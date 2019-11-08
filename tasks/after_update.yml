@@ -51,7 +51,7 @@
     
     - {
       search: "^(MAIL_SENDER=).+$",
-      replace: "\\1{{ app_config_mail_sender_url }}"
+      replace: "\\1{{ app_config_mail_sender }}"
     }
 
     - {
