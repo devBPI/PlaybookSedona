@@ -56,7 +56,7 @@
         or not app_config_ldap_host is defined
         or not app_config_ldap_port is defined
         or not app_config_mailer_url is defined
-        or not app_config_catalog_ws_url is defined
+        or not app_config_catalog_ws_host is defined
         )
 
     - name: "BPI — Chargement des valeurs"

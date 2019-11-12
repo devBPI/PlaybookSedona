@@ -79,10 +79,10 @@
       default: "null://localhost"
       private: no
 
-    - name: "app_config_catalog_ws_url"
+    - name: "app_config_catalog_ws_host"
       prompt: |
-        URL du webservice BPI
-      default: "http://10.1.2.120:8080/CatalogueWebService/api/"
+        Nom d'hôte et port du webservice BPI
+      default: "10.1.2.120:8080"
       private: no
 
   tasks:

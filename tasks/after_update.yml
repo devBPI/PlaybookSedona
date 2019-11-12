@@ -56,7 +56,7 @@
 
     - {
       search: "^(CATALOG_API_HOST=).+$",
-      replace: "\\1{{ app_config_catalog_ws_url }}"
+      replace: "\\1{{ app_config_catalog_ws_host }}"
     }
 
 - name: "Generate static configuration"
