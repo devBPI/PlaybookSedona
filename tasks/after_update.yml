@@ -23,40 +23,33 @@
       search: "^(DATABASE_URL=).+$",
         replace: "\\1postgresql://{{ app_config_database_user }}:{{ app_config_database_password }}@{{ app_config_database_host }}:5432/{{ app_config_database_name }}"
     }
-
     - {
       search: "^(REDIS_URL=).+$",
       replace: "\\1redis://{{ app_config_redis_host }}:{{ app_config_redis_port }}"
     }
-
     - {
       search: "^(LDAP_HOST=).+$",
       replace: "\\1{{ app_config_ldap_host }}"
     }
-
     - {
       search: "^(LDAP_PORT=).+$",
       replace: "LDAP_PORT={{ app_config_ldap_port }}"
     }
-
     - {
       search: "^(LDAP_PASSWORD=).+$",
       replace: "LDAP_PASSWORD={{ app_config_ldap_password }}"
     }
-
     - {
       search: "^(MAILER_URL=).+$",
       replace: "\\1{{ app_config_mailer_url }}"
     }
-    
     - {
       search: "^(MAIL_SENDER=).+$",
       replace: "\\1{{ app_config_mail_sender }}"
     }
-
     - {
       search: "^(CATALOG_API_HOST=).+$",
-      replace: "\\1{{ app_config_catalog_ws_host }}"
+      replace: "CATALOG_API_HOST={{ app_config_catalog_ws_host }}"
     }
 
 - name: "Generate static configuration"
