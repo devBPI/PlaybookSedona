@@ -69,6 +69,10 @@
       default: "6379"
       private: no
 
+    - name: "app_config_ldap_password"
+      prompt: Mot de passe du serveur LDAP
+      private: yes
+
     - name: "app_config_mailer_url"
       prompt: |
         Accès au serveur de mail.

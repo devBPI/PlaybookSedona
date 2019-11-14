@@ -55,7 +55,10 @@
         or not app_config_redis_port is defined
         or not app_config_ldap_host is defined
         or not app_config_ldap_port is defined
+        or not app_config_ldap_password is defined
         or not app_config_mailer_url is defined
+        or not app_config_mailer_sender is defined
+        or not app_config_reply_to_email is defined
         or not app_config_catalog_ws_host is defined
         )
 
