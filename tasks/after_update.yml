@@ -48,6 +48,10 @@
       replace: "\\1{{ app_config_mail_sender }}"
     }
     - {
+      search: "^(REPLY_TO_EMAIL=).+$",
+      replace: "\\1{{ app_config_reply_to_email }}"
+    }
+    - {
       search: "^(CATALOG_API_HOST=).+$",
       replace: "CATALOG_API_HOST={{ app_config_catalog_ws_host }}"
     }
