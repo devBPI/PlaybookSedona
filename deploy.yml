@@ -57,7 +57,7 @@
           - app_config_ldap_port is defined
           - app_config_ldap_password is defined
           - app_config_mailer_url is defined
-          - app_config_mailer_sender is defined
+          - app_config_mail_sender is defined
           - app_config_reply_to_email is defined
           - app_config_catalog_ws_host is defined
 
