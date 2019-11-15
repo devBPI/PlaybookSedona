@@ -34,39 +34,32 @@
         path: "{{ playbook_dir }}/config/main.yml"
       register: config_file
 
-    - name: "BPI — Vérificaton d'accès au fichier"
-      delegate_to: localhost
-      fail:
-        msg: |
-          Fichier de configuration absent ou valeur manquante.
-          Lancez 'ansible-playbook initial_setup.yml'
-      when: >
-        not config_file.stat.exists
-        and (
-        not ansistrano_deploy_to is defined
-        or not ansistrano_maven_group_id is defined
-        or not ansistrano_maven_artifact_id is defined
-        or not ansistrano_url_username is defined
-        or not app_config_database_host is defined
-        or not app_config_database_name is defined
-        or not app_config_database_user is defined
-        or not app_config_database_password is defined
-        or not app_config_redis_host is defined
-        or not app_config_redis_port is defined
-        or not app_config_ldap_host is defined
-        or not app_config_ldap_port is defined
-        or not app_config_ldap_password is defined
-        or not app_config_mailer_url is defined
-        or not app_config_mailer_sender is defined
-        or not app_config_reply_to_email is defined
-        or not app_config_catalog_ws_host is defined
-        )
-
     - name: "BPI — Chargement des valeurs"
       delegate_to: localhost
       include_vars:
         file: "{{ playbook_dir }}/config/main.yml"
       when: config_file.stat.exists
+
+    - name: "BPI — Vérification de la configuration"
+      assert:
+        that:
+          - ansistrano_deploy_to is defined
+          - ansistrano_maven_group_id is defined
+          - ansistrano_maven_artifact_id is defined
+          - ansistrano_url_username is defined
+          - app_config_database_host is defined
+          - app_config_database_name is defined
+          - app_config_database_user is defined
+          - app_config_database_password is defined
+          - app_config_redis_host is defined
+          - app_config_redis_port is defined
+          - app_config_ldap_host is defined
+          - app_config_ldap_port is defined
+          - app_config_ldap_password is defined
+          - app_config_mailer_url is defined
+          - app_config_mailer_sender is defined
+          - app_config_reply_to_email is defined
+          - app_config_catalog_ws_host is defined
 
     - name: "DEPLOY — Validate artifact type."
       fail:

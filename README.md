@@ -7,7 +7,9 @@ BPI - Catalogue - Déploiement
 * Python 3 (version 3.7 de préférence) et son gestionnaire de paquet `pip`
 * La librairie `lxml` du langage python
   - `sudo pip install -U lxml`
-* Utilisateur non-root ayant pour l'exécution des commandes de déploiement et l'exécution des processus PHP du site.
+* Utilisateur non-root avec accès `sudo` pour l'exécution des commandes de déploiement et l'exécution des processus PHP du site.  
+  Note: les accès `sudo` sont nécessaires pour redémarrer le service `php-fpm` en fin de déploiement.
+    
 ### Pour la machine de déploiement
 * Ansible >= 2.8 and requirements
    - `sudo pip install -r requirements.txt`
