@@ -83,6 +83,20 @@
       default: "null://localhost"
       private: no
 
+    - name: "app_config_mail_sender"
+      prompt: |
+        Adresse email d'expéditeur pour les messages envoyé par l'application.
+        Par défaut : catalogue.public@bpi.fr
+      default: "catalogue.public@bpi.fr"
+      private: no
+
+    - name: "app_config_reply_to_email"
+      prompt: |
+        Adresse email de réponse aux messages envoyés par l'application.
+        Par défaut : catalogue.public@bpi.fr
+      default: "catalogue.public@bpi.fr"
+      private: no
+
     - name: "app_config_catalog_ws_host"
       prompt: |
         Nom d'hôte et port du webservice BPI
