@@ -8,7 +8,7 @@ ansible-lint:
     - 'pip install ansible-lint ansible-lint-junit'
     - 'mkdir -p verify'
   script:
-    - 'ansible-lint -p *-playbook.yml > verify/ansible-lint.out || true'
+    - 'ansible-lint -p deploy.yml initial_setup.yml > verify/ansible-lint.out || true'
     - 'ansible-lint-junit verify/ansible-lint.out -o verify/report.xml'
     - 'ansible-lint *-playbook.yml'
   artifacts:
