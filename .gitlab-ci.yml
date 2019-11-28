@@ -1,16 +1,30 @@
 stages:
   - verify
+  - verify-report
 
 ansible-lint:
   stage: verify
   image: python:3-buster
   before_script:
-    - 'pip install ansible-lint ansible-lint-junit'
+    - 'pip install ansible-lint'
     - 'mkdir -p verify'
   script:
-    - 'ansible-lint -p deploy.yml initial_setup.yml > verify/ansible-lint.out || true'
+    - 'ansible-lint -p deploy.yml initial_setup.yml | tee verify/ansible-lint.out'
+  artifacts:
+    paths:
+      - verify/ansible-lint.out
+
+
+ansible-lint-report:
+  stage: verify-report
+  image: python:3-buster
+  dependencies:
+    - ansible-lint
+  before_script:
+    - 'pip install ansible-lint ansible-lint-junit'
+  script:
     - 'ansible-lint-junit verify/ansible-lint.out -o verify/report.xml'
-    - 'ansible-lint *-playbook.yml'
+  when: on_failure
   artifacts:
     reports:
       junit: verify/report.xml

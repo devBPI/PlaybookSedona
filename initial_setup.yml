@@ -73,6 +73,18 @@
       prompt: Mot de passe du serveur LDAP
       private: yes
 
+    - name: "app_config_ldap_base_dn"
+      prompt: |
+        nom du paramètre baseDn Serveur LDAP
+      default: "dc=bpi,dc=fr"
+      private: no
+
+    - name: "app_config_ldap_search_dn"
+      prompt: |
+        nom du paramètre searchDn Serveur LDAP
+      default: "ou=lecture,ou=applications,dc=bpi,dc=fr"
+      private: no
+
     - name: "app_config_mailer_url"
       prompt: |
         Accès au serveur de mail.
