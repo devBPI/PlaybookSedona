@@ -40,6 +40,14 @@
       replace: "\\g<1>{{ app_config_ldap_password }}"
     }
     - {
+      search: "^(LDAP_BASE_DN=).+$",
+      replace: "\\g<1>{{ app_config_ldap_base_dn }}"
+    }
+    - {
+      search: "^(LDAP_SEARCH_DN=).+$",
+      replace: "\\g<1>{{ app_config_ldap_search_dn }}"
+    }
+    - {
       search: "^(MAILER_URL=).+$",
       replace: "\\g<1>{{ app_config_mailer_url }}"
     }

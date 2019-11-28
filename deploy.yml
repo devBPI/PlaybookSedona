@@ -60,6 +60,8 @@
           - app_config_mail_sender is defined
           - app_config_reply_to_email is defined
           - app_config_catalog_ws_host is defined
+          - app_config_ldap_base_dn is defined
+          - app_config_ldap_search_dn is defined
 
     - name: "DEPLOY — Validate artifact type."
       fail:
