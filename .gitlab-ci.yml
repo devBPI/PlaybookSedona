@@ -11,6 +11,7 @@ ansible-lint:
   script:
     - 'ansible-lint -p deploy.yml initial_setup.yml | tee verify/ansible-lint.out'
   artifacts:
+    when: on_failure
     paths:
       - verify/ansible-lint.out
 
@@ -26,5 +27,8 @@ ansible-lint-report:
     - 'ansible-lint-junit verify/ansible-lint.out -o verify/report.xml'
   when: on_failure
   artifacts:
+    paths:
+      - verify/ansible-lint.out
+      - verify/report.xml
     reports:
       junit: verify/report.xml

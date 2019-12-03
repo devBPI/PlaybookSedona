@@ -21,7 +21,7 @@
     }
     - {
       search: "^(DATABASE_URL=).+$",
-      replace: "\\g<1>postgresql://{{ app_config_database_user }}:{{ app_config_database_password }}@{{ app_config_database_host }}:5432/{{ app_config_database_name }}"
+      replace: "\\g<1>postgresql://{{ app_config_database_user }}:{{ app_config_database_password }}@{{ app_config_database_host }}:5432/{{ app_config_database_name }}" # noqa 204
     }
     - {
       search: "^(REDIS_URL=).+$",
