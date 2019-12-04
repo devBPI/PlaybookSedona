@@ -1,3 +1,6 @@
+Prochaine version:
+    - Récupération de la gestion des paramètres ajoutés en 0.3.3 qui a été fusionné de manière incomplète (conflits)
+
 0.3.3 — 2019-12-02
     - Ajout des paramètres `app_config_ldap_base_dn` et `app_config_ldap_search_dn`
     - Prise en charge des deux paramètre dans le fichier de config `.env` du catalogue
