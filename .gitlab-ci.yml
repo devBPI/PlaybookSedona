@@ -2,6 +2,14 @@ stages:
   - verify
   - verify-report
 
+parameter-check:
+  stage: verify
+  image: python:3-buster
+  before_script:
+    - 'pip install -r dev-requirements.txt'
+  script:
+    - python -m unittest
+
 ansible-lint:
   stage: verify
   image: python:3-buster
