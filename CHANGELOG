@@ -1,5 +1,9 @@
-Prochaine version:
+
+0.3.3-rev1 — 2019-12-04
     - Récupération de la gestion des paramètres ajoutés en 0.3.3 qui a été fusionné de manière incomplète (conflits)
+    - Ajout de tests pour valider l'ajout d'un nouveau paramètres dans les différents fichiers concernés
+    - Ajout d'un guide de contribution pour documenter la procédure d'ajout de paramètres au playbook une fois celui-ci
+      défini dans le projet Interface Catalogue
 
 0.3.3 — 2019-12-02
     - Ajout des paramètres `app_config_ldap_base_dn` et `app_config_ldap_search_dn`
