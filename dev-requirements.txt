@@ -7,7 +7,7 @@ Jinja2==2.10.3
 lxml==4.4.1
 MarkupSafe==1.1.1
 pycparser==2.19
-PyYAML==5.1.2
+PyYAML==5.4
 ruamel.yaml==0.16.5
 ruamel.yaml.clib==0.2.0
 selinux==0.2.0
