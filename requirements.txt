@@ -6,6 +6,6 @@ Jinja2==2.10.3
 lxml==4.4.1
 MarkupSafe==1.1.1
 pycparser==2.19
-PyYAML==5.1.2
+PyYAML==5.4
 selinux==0.2.0
 six==1.12.0
